@@ -17,25 +17,6 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0" colspan="3">
-       <widget class="QLabel" name="map">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0" colspan="2">
        <widget class="QLineEdit" name="search_line">
         <property name="sizePolicy">
@@ -71,25 +52,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QRadioButton" name="schematic">
-        <property name="font">
-         <font>
-          <family>DejaVu Sans</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Схема</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>data/icons/schematic.png</normaloff>data/icons/schematic.png</iconset>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1">
        <widget class="QRadioButton" name="satellite">
         <property name="font">
@@ -107,9 +69,34 @@
          <iconset>
           <normaloff>data/icons/satellite.png</normaloff>data/icons/satellite.png</iconset>
         </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
        </widget>
       </item>
       <item row="1" column="2">
+       <widget class="QRadioButton" name="schematic">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Схема</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>data/icons/schematic.png</normaloff>data/icons/schematic.png</iconset>
+        </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
+       </widget>
+      </item>
+      <item row="1" column="0">
        <widget class="QRadioButton" name="hybrid">
         <property name="font">
          <font>
@@ -126,6 +113,31 @@
          <iconset>
           <normaloff>data/icons/cube.png</normaloff>data/icons/cube.png</iconset>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <attribute name="buttonGroup">
+         <string notr="true">buttonGroup</string>
+        </attribute>
+       </widget>
+      </item>
+      <item row="2" column="0" rowspan="2" colspan="3">
+       <widget class="QLabel" name="map">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
        </widget>
       </item>
      </layout>
@@ -135,4 +147,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>
