@@ -37,7 +37,7 @@
        </widget>
       </item>
       <item row="0" column="0" colspan="2">
-       <widget class="QLineEdit" name="serch_line">
+       <widget class="QLineEdit" name="search_line">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -53,7 +53,7 @@
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QPushButton" name="clear_serch">
+       <widget class="QPushButton" name="clear_search">
         <property name="font">
          <font>
           <family>DejaVu Sans</family>
