@@ -16,8 +16,8 @@ class Scheme(Enum):
 
 # Пример использования:
 # get_map(-25.694422, 133.791467, (25, 35), scheme=Scheme.Map)
-def get_map(latitude, longitude, scheme=Scheme.Hybrid):
-    url = f"{URL}/?ll={longitude},{latitude}&size=650,450&l={scheme.value}&spn=25,35"
+def get_map(latitude, longitude, spn=(25, 35), scheme=Scheme.Hybrid):
+    url = f"{URL}/?ll={longitude},{latitude}&size=650,450&l={scheme.value}&spn={spn[0]},{spn[1]}"
     if response := requests.get(url):
         return ImageQt(Image.open(io.BytesIO(response.content)))
 
