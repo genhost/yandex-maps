@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(858, 662)
+        MainWindow.resize(853, 650)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.map.sizePolicy().hasHeightForWidth())
         self.map.setSizePolicy(sizePolicy)
-        self.map.setMinimumSize(QtCore.QSize(0, 90))
+        self.map.setMinimumSize(QtCore.QSize(0, 0))
         self.map.setText("")
         self.map.setObjectName("map")
         self.gridLayout.addWidget(self.map, 2, 0, 1, 3)
