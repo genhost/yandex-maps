@@ -1,12 +1,14 @@
 import sys
 
 from ui import Ui_MainWindow
-from PyQt5.QtGui import QPixmap
+from PIL.ImageQt import ImageQt
+from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
 from math import ceil
 
-from api import Scheme, get_map
+import api
+from api import Scheme
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -14,17 +16,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         super().setupUi(self)
 
+        self.search_line.returnPressed.connect(self.draw_map)
+
         self.height_offset = self.clear_search.height() + self.hybrid.height()
-        self.longitude = -25.694422
-        self.latitude = 133.791467
-        self.spn = [25, 35]
-        self.scheme = Scheme.Map
-        self.draw_map()
 
     def draw_map(self):
-        self.pixmap = QPixmap.fromImage(
-            get_map(self.longitude, self.latitude, self.spn, scheme=self.scheme)
-        )
+        print("drawn")
+        # coords = api.locate(self.search_line.text())
+        map = api.get_map(55.7522, 37.6156)
+
+        self.pixmap = QPixmap.fromImage(QImage(ImageQt(map)))
 
         self.map.move(0, self.height_offset)
         self.map.setPixmap(self.pixmap)
