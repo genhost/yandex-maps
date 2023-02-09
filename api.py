@@ -2,23 +2,23 @@ import io
 
 import requests
 from PIL import Image
+from enum import Enum
 
-SATELLITE = 'sat'
-MAP = 'map'
-HYBRID = 'sat,skl'
-
-
-def get_map(latitude, longitude, size, l):
-    map_request = f"https://static-maps.yandex.ru/1.x/?ll={longitude},{latitude}&spn={size[0]},{size[1]}&l={l}"
-    print(map_request)
-    try:
-        if response := requests.get(map_request):
-            file = Image.open(io.BytesIO(response.content))
-            return file
-        else:
-            raise StopIteration
-    except StopIteration:
-        print('НЕПРАВИЛЬНЫЙ ЗАПРОС')
+URL = f"https://static-maps.yandex.ru/1.x/"
 
 
-file = get_map('-25.694422', '133.791467', ['25', '35'], MAP)
+class Scheme(Enum):
+    Sattelite = "sat"
+    Map = "map"
+    Hybrid = "sat,skl"
+
+
+# Пример использования:
+# get_map(-25.694422, 133.791467, (25, 35), scheme=Scheme.Map)
+def get_map(latitude, longitude, size, scheme=Scheme.Hybrid):
+    params = {"ll": (longitude, latitude), "spn": size, "l": scheme.value}
+
+    if response := requests.get(URL, params=params):
+        return Image.open(io.BytesIO(response.content))
+
+    raise requests.ConnectionError
