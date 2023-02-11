@@ -25,7 +25,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.height_offset = self.clear_search.height() + self.hybrid.height()
         self.zoom = api.DEFAULT_ZOOM
         self.step = api.DEFAULT_STEP
-        self.current_coords = list(api.DEFAULT_LOCATION)
+        self.current_coords = api.DEFAULT_LOCATION
         self.last_map = None
 
         self.map.move(0, self.height_offset)
@@ -40,8 +40,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def draw_map(self, dx=0, dy=0):
         try:
             coords = list(api.locate(self.search_line.text()))
-            self.current_coords[0] += dx
-            self.current_coords[1] += dy
+            self.current_coords = (self.current_coords[0] + dx, self.current_coords[1] + dy)
             if not coords:
                 coords = self.current_coords
             map = api.get_map(coords, zoom=self.zoom)
