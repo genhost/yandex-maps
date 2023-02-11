@@ -9,6 +9,7 @@ from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 import api
+from api import Scheme
 
 # FALLBACK_MAP = Image.open("/".join(__file__.split("/")[:-1]) + "/fallback.png")
 FALLBACK_MAP = Image.open("loading.png")
@@ -29,12 +30,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.map.move(0, self.height_offset)
         self.resize(api.MAP_SIZE[0], api.MAP_SIZE[1] + self.height_offset)
 
+        self.schematic.toggled.connect(self.draw_map)
+        self.satellite.toggled.connect(self.draw_map)
+        self.hybrid.toggled.connect(self.draw_map)
+
         self.draw_map()
 
     def draw_map(self):
         try:
             coords = api.locate(self.search_line.text())
-            map = api.get_map(coords, zoom=self.zoom)
+            scheme_type = self._get_select_scheme()
+            map = api.get_map(coords, zoom=self.zoom, scheme=scheme_type)
         except api.ApiException:
             if self.last_map:
                 map = self.last_map
@@ -58,6 +64,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.zoom = ZOOM_BOUNDS[1]
 
             self.draw_map()
+
+    def _get_select_scheme(self) -> Scheme:
+        name = self.scheme_tips.checkedButton().text()
+        match name:
+            case 'Гибрид':
+                return Scheme.Hybrid
+            case 'Спутник':
+                return Scheme.Sattelite
+            case 'Схема':
+                return Scheme.Map
+        self.draw_map()
 
 
 def convert_image_to_qimage(image):
