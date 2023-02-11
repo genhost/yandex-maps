@@ -28,6 +28,7 @@ class Scheme(Enum):
 DEFAULT_LOCATION = 37.620070, 55.753630
 MAP_SIZE = 650, 450
 DEFAULT_ZOOM = 10
+DEFAULT_STEP = 0.1
 
 # Пример использования:
 # get_map(-25.694422, 133.791467, (25, 35), scheme=Scheme.Map)
@@ -67,10 +68,7 @@ def locate(address: str):
 
             coords = toponym_coodrinates.split(" ")
             _LOC_CACHE[address] = coords
-        else:
-            coords = DEFAULT_LOCATION
-
-        return coords
+        return ()
     except requests.RequestException:
         raise LocationNotFoundError
     except IndexError:
