@@ -1,7 +1,6 @@
 import sys
 
 
-from math import ceil
 from PIL import Image
 from PyQt5.QtCore import Qt
 from ui import Ui_MainWindow
@@ -25,6 +24,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.height_offset = self.clear_search.height() + self.hybrid.height()
         self.zoom = api.DEFAULT_ZOOM
+        self.step = api.DEFAULT_STEP
+        self.current_coords = list(api.DEFAULT_LOCATION)
         self.last_map = None
 
         self.map.move(0, self.height_offset)
@@ -36,8 +37,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.draw_map()
 
-    def draw_map(self):
+    def draw_map(self, dx=0, dy=0):
         try:
+            coords = list(api.locate(self.search_line.text()))
+            self.current_coords[0] += dx
+            self.current_coords[1] += dy
+            if not coords:
+                coords = self.current_coords
+            map = api.get_map(coords, zoom=self.zoom)
             coords = api.locate(self.search_line.text())
             scheme_type = self._get_select_scheme()
             map = api.get_map(coords, zoom=self.zoom, scheme=scheme_type)
@@ -52,17 +59,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.last_map = map
 
     def keyPressEvent(self, event):
-        if (key := event.key()) in {Qt.Key_PageUp, Qt.Key_PageDown}:
+        dx, dy = 0, 0
+        if (key := event.key()) in {Qt.Key_PageUp, Qt.Key_PageDown, Qt.Key_Up, Qt.Key_Down, Qt.Key_Right,
+                                    Qt.Key_Left}:
             if key == Qt.Key_PageUp:
                 self.zoom += 1
+                self.step /= 2
             elif key == Qt.Key_PageDown:
                 self.zoom -= 1
+                self.step *= 2
+            elif key == Qt.Key_Up:
+                dy = self.step
+            elif key == Qt.Key_Down:
+                dy = -self.step
+            elif key == Qt.Key_Right:
+                dx = self.step
+            elif key == Qt.Key_Left:
+                dx = -self.step
 
             if self.zoom < ZOOM_BOUNDS[0]:
                 self.zoom = ZOOM_BOUNDS[0]
             elif self.zoom > ZOOM_BOUNDS[1]:
                 self.zoom = ZOOM_BOUNDS[1]
 
+            self.draw_map(dx=dx, dy=dy)
             self.draw_map()
 
     def _get_select_scheme(self) -> Scheme:
