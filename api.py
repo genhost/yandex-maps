@@ -5,12 +5,6 @@ import requests
 from PIL import Image
 from enum import Enum
 
-URL = f"https://static-maps.yandex.ru/1.x"
-
-DEFAULT_LOCATION = 37.620070, 55.753630
-MAP_SIZE = 650, 450
-DEFAULT_ZOOM = 10
-
 
 class ApiException(Exception):
     pass
@@ -32,6 +26,15 @@ class Scheme(Enum):
     Sattelite = "sat"
     Map = "map"
     Hybrid = "sat,skl"
+
+
+URL = f"https://static-maps.yandex.ru/1.x"
+
+DEFAULT_LOCATION = 37.620070, 55.753630
+MAP_SIZE = 650, 450
+DEFAULT_ZOOM = 10
+DEFAULT_STEP = 0.1
+DEFAULT_SCHEME = Scheme.Hybrid
 
 
 class Style(Enum):
@@ -144,7 +147,7 @@ class Point:
 def get_map(
     coords=DEFAULT_LOCATION,
     zoom=DEFAULT_ZOOM,
-    scheme=Scheme.Hybrid,
+    scheme=DEFAULT_SCHEME,
     points=None,
 ):
     url = f"{URL}/?ll={coords[0]},{coords[1]}&z={zoom}&size={MAP_SIZE[0]},{MAP_SIZE[1]}&l={scheme.value}"
@@ -164,6 +167,7 @@ def get_map(
 
 
 _LOC_CACHE = {}
+_LOC_LAST = None
 
 
 def locate(address: str):
@@ -177,6 +181,7 @@ def locate(address: str):
         return _LOC_CACHE[address]
 
     try:
+        global _LOC_LAST
         if response := requests.get(url, params=params):
             response_json = response.json()
 
@@ -185,12 +190,11 @@ def locate(address: str):
             ]["GeoObject"]
             toponym_coodrinates = toponym["Point"]["pos"]
 
-            coords = toponym_coodrinates.split(" ")
+            coords = tuple(map(float, toponym_coodrinates.split(" ")))
             _LOC_CACHE[address] = coords
-        else:
-            coords = DEFAULT_LOCATION
-
-        return coords
+            _LOC_LAST = coords
+            return coords
+        return _LOC_LAST if _LOC_LAST else DEFAULT_LOCATION
     except requests.RequestException:
         raise LocationNotFoundError
     except IndexError:
