@@ -57,8 +57,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             elif self.zoom > ZOOM_BOUNDS[1]:
                 self.zoom = ZOOM_BOUNDS[1]
 
-            print(self.zoom)
-
             self.draw_map()
 
 
