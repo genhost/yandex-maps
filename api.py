@@ -98,9 +98,9 @@ class Point:
     def __init__(
         self,
         coords: Tuple[float, float],
-        style: Style = Style.Rect,
-        color: Color = Color.White,
-        size: Size = Size.Medium,
+        style: Style = Style.Flag,
+        color: Optional[Color] = None,
+        size: Optional[Size] = None,
         content: Optional[int] = None,
     ):
         self.coords = coords
@@ -115,10 +115,10 @@ class Point:
         a = _AVAILABLES[self.style.value]
         colors, sizes = a["colors"], a["sizes"]
 
-        if self.color.value not in colors:
+        if self.color and self.color.value not in colors:
             raise PointError(f"{self.color} conflicts with {self.style}")
 
-        if self.size.value not in sizes:
+        if self.size and self.size.value not in sizes:
             raise PointError(f"{self.size} conflicts with {self.style}")
 
         if not self.content:
@@ -127,7 +127,7 @@ class Point:
         if self.style.value in "flagvkorgcommaroundhomeworkya_ru":
             raise PointError(f"Content assignment not supported by {self.style}")
 
-        if self.style == Style.Rect:
+        if self.style == Style.Rect and self.size:
             if self.size in {Size.Small, Size.Medium} and not (1 <= self.content <= 99):
                 raise PointError(f"{self.content} must be in range [1,99]")
             if self.size == Size.Large and not (1 <= self.content <= 100):
@@ -136,7 +136,11 @@ class Point:
             raise PointError(f"{self.content} must be in range [1,99]")
 
     def desc(self) -> str:
-        return f"{self.coords[0]},{self.coords[1]},{self.style.value}{self.color.value}{self.size.value}{self.content if self.content else ''}"
+        color = self.color.value if self.color else ""
+        size = self.size.value if self.size else ""
+        content = self.content if self.content else ""
+
+        return f"{self.coords[0]},{self.coords[1]},{self.style.value}{color}{size}{content if content else ''}"
 
     def __str__(self):
         return self.desc()
@@ -152,7 +156,7 @@ def get_map(
 ):
     url = f"{URL}/?ll={coords[0]},{coords[1]}&z={zoom}&size={MAP_SIZE[0]},{MAP_SIZE[1]}&l={scheme.value}"
 
-    if points and points is Point:
+    if points and type(points) is Point:
         url += f"&pt={points.desc()}"
     elif points:
         url += f"&pt={'~'.join(map(Point.desc, points))}"

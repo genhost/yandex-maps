@@ -8,7 +8,7 @@ from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 import api
-from api import Scheme
+from api import Point, Scheme, Style
 
 CURRENT_DIR = "/".join(__file__.split("/")[:-1])
 FALLBACK_MAP = Image.open(CURRENT_DIR + "/data/loading.png")
@@ -35,6 +35,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.height_offset = self.clear_search.height() + self.hybrid.height()
 
         self.last_map = None
+        self.points = None
         self.scheme = api.DEFAULT_SCHEME
         self.zoom = api.DEFAULT_ZOOM
         self.step = api.DEFAULT_STEP
@@ -47,7 +48,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def draw_map(self):
         try:
-            map = api.get_map(self.coords, zoom=self.zoom, scheme=self.scheme)
+            map = api.get_map(
+                self.coords, zoom=self.zoom, scheme=self.scheme, points=self.points
+            )
         except api.ApiException:
             if self.last_map:
                 map = self.last_map
@@ -67,9 +70,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.unfocus()
         try:
             self.coords = api.locate(self.search_line.text())
+            self.points = Point(self.coords, Style.Flag)
             self.draw_map()
-        except api.ApiException:
-            pass
+        except api.ApiException as e:
+            print(e)
 
     def shift(self, dx=0, dy=0):
         try:
