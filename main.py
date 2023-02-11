@@ -69,11 +69,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def search(self):
         self.unfocus()
         try:
-            self.coords = api.locate(self.search_line.text())
+            self.coords = api.locate(self.search_line.text(), self.coords)
             self.points = Point(self.coords, Style.Flag)
             self.draw_map()
-        except api.ApiException as e:
+        except api.PointError as e:
             print(e)
+        except api.ApiException:
+            pass
 
     def shift(self, dx=0, dy=0):
         try:

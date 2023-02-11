@@ -171,10 +171,9 @@ def get_map(
 
 
 _LOC_CACHE = {}
-_LOC_LAST = None
 
 
-def locate(address: str):
+def locate(address: str, fallback_coords=None):
     url = f"http://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&"
     params = {
         "geocode": address,
@@ -198,7 +197,7 @@ def locate(address: str):
             _LOC_CACHE[address] = coords
             _LOC_LAST = coords
             return coords
-        return _LOC_LAST if _LOC_LAST else DEFAULT_LOCATION
+        return fallback_coords if fallback_coords else DEFAULT_LOCATION
     except requests.RequestException:
         raise LocationNotFoundError
     except IndexError:
