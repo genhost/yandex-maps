@@ -10,8 +10,9 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 
 import api
 
-# FALLBACK_MAP = Image.open("/".join(__file__.split("/")[:-1]) + "/fallback.png")
-FALLBACK_MAP = Image.open("loading.png")
+CURRENT_DIR = "/".join(__file__.split("/")[:-1])
+# FALLBACK_MAP = Image.open(CURRENT_DIR + "/fallback.png")
+FALLBACK_MAP = Image.open(CURRENT_DIR + "/loading.png")
 ZOOM_BOUNDS = 0, 17
 
 
