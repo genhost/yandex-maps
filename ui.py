@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\main.ui'
+# Form implementation generated from reading ui file 'main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.satellite.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(".\\data/icons/satellite.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("data/icons/satellite.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.satellite.setIcon(icon)
         self.satellite.setObjectName("satellite")
         self.scheme_tips = QtWidgets.QButtonGroup(MainWindow)
@@ -57,7 +57,7 @@ class Ui_MainWindow(object):
         self.hybrid.setFont(font)
         self.hybrid.setLayoutDirection(QtCore.Qt.LeftToRight)
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(".\\data/icons/cube.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("data/icons/cube.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.hybrid.setIcon(icon1)
         self.hybrid.setChecked(True)
         self.hybrid.setObjectName("hybrid")
@@ -76,7 +76,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.schematic.setFont(font)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(".\\data/icons/schematic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("data/icons/schematic.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.schematic.setIcon(icon2)
         self.schematic.setObjectName("schematic")
         self.scheme_tips.addButton(self.schematic)
@@ -106,7 +106,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.clear_search.setFont(font)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(".\\data/icons/trash.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("data/icons/trash.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.clear_search.setIcon(icon3)
         self.clear_search.setObjectName("clear_search")
         self.gridLayout.addWidget(self.clear_search, 0, 5, 1, 1)
@@ -123,7 +123,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.search_button.setFont(font)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(".\\data/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap("data/icons/search.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.search_button.setIcon(icon4)
         self.search_button.setObjectName("search_button")
         self.gridLayout.addWidget(self.search_button, 0, 2, 1, 3)

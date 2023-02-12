@@ -11,7 +11,9 @@ import api
 from api import Point, Scheme, Style
 
 CURRENT_DIR = "/".join(__file__.split("/")[:-1])
-FALLBACK_MAP = Image.open(CURRENT_DIR + os.path.join('data', 'loading.png'))
+FALLBACK_MAP = Image.open(
+    os.path.join(CURRENT_DIR, os.path.join("data", "loading.png"))
+)
 ZOOM_BOUNDS = 0, 17
 
 HUMAN_SCHEME = {
