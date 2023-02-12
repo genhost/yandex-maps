@@ -31,6 +31,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.search_line.returnPressed.connect(self.search)
         self.search_button.clicked.connect(self.search)
 
+        self.clear_search.clicked.connect(self.clear_map)
+
         self.schematic.toggled.connect(self.update_scheme)
         self.satellite.toggled.connect(self.update_scheme)
         self.hybrid.toggled.connect(self.update_scheme)
@@ -134,6 +136,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def current_scheme(self) -> Scheme:
         name = self.scheme_tips.checkedButton().text()
         return HUMAN_SCHEME[name]
+
+    def clear_map(self) -> None:
+        self.coords = api.DEFAULT_LOCATION
+        self.zoom = api.DEFAULT_ZOOM
+        self.scheme = api.DEFAULT_SCHEME
+        self.points = None
+        
+        self.search_line.setText('')
+
+        self.draw_map()
+        
 
 
 def convert_image_to_qimage(image):
