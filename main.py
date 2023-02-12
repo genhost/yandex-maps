@@ -1,5 +1,5 @@
 import sys
-
+import os
 
 from PIL import Image
 from PyQt5.QtCore import Qt
@@ -11,7 +11,7 @@ import api
 from api import Point, Scheme, Style
 
 CURRENT_DIR = "/".join(__file__.split("/")[:-1])
-FALLBACK_MAP = Image.open(CURRENT_DIR + "/data/loading.png")
+FALLBACK_MAP = Image.open(CURRENT_DIR + os.path.join('data', 'loading.png'))
 ZOOM_BOUNDS = 0, 17
 
 HUMAN_SCHEME = {
@@ -27,6 +27,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().setupUi(self)
 
         self.search_line.returnPressed.connect(self.search)
+        self.search_button.clicked.connect(self.search)
 
         self.schematic.toggled.connect(self.update_scheme)
         self.satellite.toggled.connect(self.update_scheme)
