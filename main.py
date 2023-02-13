@@ -38,7 +38,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.hybrid.toggled.connect(self.update_scheme)
 
         self.height_offset = self.clear_search.height() + self.hybrid.height()
-
         self.last_map = None
         self.points = None
         self.scheme = api.DEFAULT_SCHEME
