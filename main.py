@@ -36,6 +36,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.schematic.toggled.connect(self.update_scheme)
         self.satellite.toggled.connect(self.update_scheme)
         self.hybrid.toggled.connect(self.update_scheme)
+        self.postel_code.stateChanged.connect(self.update_status_line)
 
         self.height_offset = self.clear_search.height() + self.hybrid.height()
         self.last_map = None
@@ -72,7 +73,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.draw_map()
 
     def update_status_line(self):
-        self.status_line.setText("Москва, 1")
+        addres = 'asdf'
+        postel_code =  '1243'
+        if self.postel_code.isChecked():
+            self.status_line.setText(f'{addres} 📭 {postel_code}')
+        else:
+            self.status_line.setText(f'{addres} 📫')
 
     def search(self):
         self.unfocus()
