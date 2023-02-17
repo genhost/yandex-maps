@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>676</width>
-    <height>514</height>
+    <width>677</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -165,26 +165,6 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="6">
-       <widget class="QWidget" name="widget" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: #e2e2e2;
-border-radius: 8;</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="6">
        <widget class="QCheckBox" name="checkBox">
         <property name="font">
@@ -252,6 +232,31 @@ border-radius: 8;</string>
         <property name="icon">
          <iconset>
           <normaloff>data/icons/trash.png</normaloff>data/icons/trash.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="5">
+       <widget class="QLabel" name="status_line">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Cascadia Mono</family>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>

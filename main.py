@@ -64,11 +64,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.map.setPixmap(QPixmap.fromImage(convert_image_to_qimage(map)))
 
         self.last_map = map
+        self.update_status_line()
 
     def update_scheme(self):
         self.unfocus()
         self.scheme = self.current_scheme()
         self.draw_map()
+
+    def update_status_line(self):
+        self.status_line.setText("Москва, 1")
 
     def search(self):
         self.unfocus()
