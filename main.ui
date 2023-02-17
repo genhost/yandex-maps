@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Yandex Maps</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>data/logo/main_logo.png</normaloff>data/logo/main_logo.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
