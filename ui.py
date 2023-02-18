@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(677, 590)
+        MainWindow.resize(677, 516)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(".\\data/logo/main_logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -147,7 +147,7 @@ class Ui_MainWindow(object):
         self.clear_search.setObjectName("clear_search")
         self.gridLayout.addWidget(self.clear_search, 0, 5, 1, 2)
         self.status_line = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.status_line.sizePolicy().hasHeightForWidth())
@@ -158,6 +158,7 @@ class Ui_MainWindow(object):
         font.setPointSize(13)
         self.status_line.setFont(font)
         self.status_line.setText("")
+        self.status_line.setWordWrap(True)
         self.status_line.setObjectName("status_line")
         self.gridLayout.addWidget(self.status_line, 4, 0, 1, 5)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
