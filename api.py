@@ -173,14 +173,14 @@ def get_map(
 _LOC_CACHE = {}
 
 
-def locate(address: str, fallback_coords=None):
+def locate(address: str, fallback_coords=None, return_full_address=False, return_postal_code=False):
     url = f"http://geocode-maps.yandex.ru/1.x/?apikey=40d1649f-0493-4b70-98ba-98533de7710b&"
     params = {
         "geocode": address,
         "format": "json",
     }
 
-    if address in _LOC_CACHE:
+    if address in _LOC_CACHE and not (return_full_address or return_postal_code):
         return _LOC_CACHE[address]
 
     try:
@@ -191,14 +191,31 @@ def locate(address: str, fallback_coords=None):
             toponym = response_json["response"]["GeoObjectCollection"]["featureMember"][
                 0
             ]["GeoObject"]
-            toponym_coodrinates = toponym["Point"]["pos"]
+            toponym_address = toponym["metaDataProperty"]["GeocoderMetaData"]["text"]
+            toponym_coordinates = toponym["Point"]["pos"]
+            try:
+                toponym_postal_code = toponym['metaDataProperty']['GeocoderMetaData']['Address']['postal_code']
+            except KeyError:
+                toponym_postal_code = ''
 
-            coords = tuple(map(float, toponym_coodrinates.split(" ")))
+            coords = tuple(map(float, toponym_coordinates.split(" ")))
             _LOC_CACHE[address] = coords
             _LOC_LAST = coords
+            if return_full_address:
+                return toponym_address
+            elif return_postal_code:
+                return toponym_postal_code
             return coords
         return fallback_coords if fallback_coords else DEFAULT_LOCATION
     except requests.RequestException:
         raise LocationNotFoundError
     except IndexError:
         raise LocationNotFoundError
+
+
+def return_full_address(address: str):
+    return locate(address, return_full_address=True)
+
+
+def return_postal_code(address: str):
+    return locate(address, return_postal_code=True)

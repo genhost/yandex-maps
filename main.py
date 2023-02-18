@@ -26,6 +26,7 @@ HUMAN_SCHEME = {
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.address = 'Москва'
         super().setupUi(self)
 
         self.search_line.returnPressed.connect(self.search)
@@ -73,16 +74,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.draw_map()
 
     def update_status_line(self):
-        addres = 'asdf'
-        postel_code =  '1243'
+        address = api.return_full_address(self.address)
+        postal_code = api.return_postal_code(self.address)
         if self.postel_code.isChecked():
-            self.status_line.setText(f'{addres} 📭 {postel_code}')
+            self.status_line.setText(f'{address} 📭 {postal_code}')
         else:
-            self.status_line.setText(f'{addres} 📫')
+            self.status_line.setText(f'{address} 📫')
 
     def search(self):
         self.unfocus()
         try:
+            self.address = self.search_line.text()
             self.coords = api.locate(self.search_line.text(), self.coords)
             self.points = Point(self.coords, Style.Flag)
             self.draw_map()
